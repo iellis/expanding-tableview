@@ -90,9 +90,9 @@ static NSString *headerCellID = @"Category";
     return retVal;
 }
 
-- (int)categoryIndexForIndexPath:(NSIndexPath *)indexPath {
+- (NSInteger)categoryIndexForIndexPath:(NSIndexPath *)indexPath {
     
-    int index = -1;
+    NSInteger index = -1;
     if (indexPath) {
     
         if (!_selectedIndexPath || indexPath.row <= _selectedIndexPath.row) {
@@ -110,9 +110,9 @@ static NSString *headerCellID = @"Category";
     return index;
 }
 
-- (int)cellIndexForIndexPath:(NSIndexPath *)indexPath {
+- (NSInteger)cellIndexForIndexPath:(NSIndexPath *)indexPath {
     
-    int index = -1;
+    NSInteger index = -1;
     
     if (_selectedIndexPath && ![self isCategoryCellIndexPath:indexPath]) {
         index = indexPath.row - (_selectedIndexPath.row + 1);
@@ -181,8 +181,8 @@ static NSString *headerCellID = @"Category";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    int nextCategoryCellCount = ((NSNumber *)_cellCountPerCategory[[self categoryIndexForIndexPath:indexPath]]).intValue;
-    int previousCategoryCellCount = [self cellCountForSelectedCategory];
+    NSInteger nextCategoryCellCount = ((NSNumber *)_cellCountPerCategory[[self categoryIndexForIndexPath:indexPath]]).integerValue;
+    NSInteger previousCategoryCellCount = [self cellCountForSelectedCategory];
     
     NSMutableArray *deleteRows = [[NSMutableArray alloc] initWithCapacity:previousCategoryCellCount];
 
@@ -261,7 +261,7 @@ static NSString *headerCellID = @"Category";
     if ([self isCategoryCellIndexPath:sourceIndexPath]) {
         if (proposedDestinationIndexPath.row == _selectedIndexPath.row) {
             //this is a room, currently over the selected room
-            int targetRow = MAX(0, _selectedIndexPath.row - 1);
+            NSInteger targetRow = MAX(0, _selectedIndexPath.row - 1);
             movePath = [NSIndexPath indexPathForRow:targetRow inSection:0];
             
         } else if (![self isCategoryCellIndexPath:proposedDestinationIndexPath]) {
@@ -269,7 +269,7 @@ static NSString *headerCellID = @"Category";
             
             if (proposedDestinationIndexPath.row > _selectedIndexPath.row + [self cellCountForSelectedCategory]/2) {
                 //the criteria is in the bottom half of the list
-                int targetRow = _selectedIndexPath.row + [self cellCountForSelectedCategory];
+                NSInteger targetRow = _selectedIndexPath.row + [self cellCountForSelectedCategory];
                 if (sourceIndexPath.row > _selectedIndexPath.row) {
                     //if the source is below the selection, add one because no cell is going to be removed above the selection after the move
                     ++targetRow;
@@ -279,7 +279,7 @@ static NSString *headerCellID = @"Category";
                 //the criteria is in the top half of the list
                 
                 //take the place of the current selection
-                int targetRow = _selectedIndexPath.row;
+                NSInteger targetRow = _selectedIndexPath.row;
                 if (sourceIndexPath.row < _selectedIndexPath.row) {
                     //but if we're coming from above the selection, decrement becuase we're also vacating a slot
                     targetRow--;
@@ -329,7 +329,7 @@ static NSString *headerCellID = @"Category";
         if (fromIndexPath.row < _selectedIndexPath.row && toIndexPath.row > _selectedIndexPath.row) {
             
             //moved a row from below the selection to above it, so decrement the selected row
-            int targetRow = MAX(0, _selectedIndexPath.row - 1);
+            NSInteger targetRow = MAX(0, _selectedIndexPath.row - 1);
             _selectedIndexPath = [NSIndexPath indexPathForRow:targetRow inSection:0];
         } else if (fromIndexPath.row > _selectedIndexPath.row && toIndexPath.row <= _selectedIndexPath.row) {
             
