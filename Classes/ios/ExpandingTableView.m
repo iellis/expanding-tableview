@@ -135,7 +135,7 @@ static NSString *headerCellID = @"Category";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    NSAssert(_delegate, @"ExpandingTableView missing a delegate");
     
     UITableViewCell *retCell = nil;
     if (![self isCategoryCellIndexPath:indexPath]) {
@@ -153,6 +153,9 @@ static NSString *headerCellID = @"Category";
 #pragma mark ScrollViewDelegate methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    NSAssert(_delegate, @"ExpandingTableView missing a delegate");
+    
     [_delegate expandingTableViewDidScroll:self];
 }
 
@@ -180,6 +183,8 @@ static NSString *headerCellID = @"Category";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSAssert(_delegate, @"ExpandingTableView missing a delegate");
 
     NSInteger nextCategoryCellCount = ((NSNumber *)_cellCountPerCategory[[self categoryIndexForIndexPath:indexPath]]).integerValue;
     NSInteger previousCategoryCellCount = [self cellCountForSelectedCategory];
@@ -246,7 +251,7 @@ static NSString *headerCellID = @"Category";
     
     //scroll the view to make sure any new rows are in the view
     if (newRows) {
-        [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        [tableView scrollToRowAtIndexPath:newRows[0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     }
     
     //notify the delegate of what happened
@@ -322,6 +327,8 @@ static NSString *headerCellID = @"Category";
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    
+    NSAssert(_delegate, @"ExpandingTableView missing a delegate");
     
     if ([self isCategoryCellIndexPath:fromIndexPath]) {
         

@@ -17,6 +17,7 @@
 
 @protocol ExpandingTableViewDelegate
 
+//note- do not use base UITableViewCell implementation if you want the cell reordering control to appear
 - (UITableViewCell *)cellForCategoryWithIndex:(NSInteger)categoryIndex forIndexPath:(NSIndexPath *)indexPath;
 - (UITableViewCell *)cellForCategoryWithIndex:(NSInteger)categoryIndex andCellIndex:(NSInteger)cellIndex forIndexPath:(NSIndexPath *)indexPath;
 - (void)expandingTableView:(ExpandingTableView *)expandingTableView didChangeSelectedCategoryIndexTo:(NSInteger)selectedIndex andCloseCategoryIndex:(NSInteger)closedIndex;
@@ -27,7 +28,7 @@
 
 @interface ExpandingTableView : UIView <UITableViewDataSource, UITableViewDelegate>
 
-
+//TODO: add cell registrations? 
 
 - (void)reloadData;
 
@@ -37,7 +38,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (assign, nonatomic) NSInteger categoryCount;
-@property (strong, nonatomic) NSArray *cellCountPerCategory;
+@property (strong, nonatomic) NSArray *cellCountPerCategory; //of NSNumber
 
 @property (assign, nonatomic) CGFloat cellHeight;
 @property (assign, nonatomic) CGFloat categoryHeight;
