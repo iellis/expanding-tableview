@@ -250,7 +250,7 @@ static NSString *headerCellID = @"Category";
     [tableView endUpdates];
     
     //scroll the view to make sure any new rows are in the view
-    if (newRows) {
+    if (newRows && newRows.count > 0) {
         [tableView scrollToRowAtIndexPath:newRows[0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     }
     
